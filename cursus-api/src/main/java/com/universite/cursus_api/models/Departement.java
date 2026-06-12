@@ -27,6 +27,6 @@ public class Departement {
     private Faculte faculte;
 
     @OneToMany(mappedBy = "departement", cascade = CascadeType.ALL)
-    @JsonManagedReference // Parent de Promotion
+    @JsonManagedReference
     private List<Promotion> promotions;
 }

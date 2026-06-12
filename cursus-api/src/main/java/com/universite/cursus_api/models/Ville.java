@@ -21,6 +21,6 @@ public class Ville {
     private String nom;
 
     @OneToMany(mappedBy = "ville", cascade = CascadeType.ALL)
-    @JsonManagedReference // Parent de Universite
+    @JsonManagedReference 
     private List<Universite> universites;
 }

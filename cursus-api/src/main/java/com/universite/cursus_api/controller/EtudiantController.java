@@ -25,19 +25,14 @@ public class EtudiantController {
         this.anneeAcademiqueRepository = anneeAcademiqueRepository;
     }
 
-    /**
-     * NOUVEAU : Endpoint de recherche par mot-clé (Nom ou Matricule)
-     * URL : http://localhost:8080/api/etudiants/recherche?query=christian
-     */
+    
     @GetMapping("/recherche")
     public ResponseEntity<List<Etudiant>> rechercher(@RequestParam String query) {
         List<Etudiant> etudiants = etudiantService.rechercherEtudiants(query);
         return ResponseEntity.ok(etudiants);
     }
 
-    /**
-     * Endpoint pour récupérer le profil simple d'un étudiant
-     */
+    
     @GetMapping("/{matriculeUnique}")
     public ResponseEntity<Etudiant> getEtudiantParMatricule(@PathVariable String matriculeUnique) {
         Optional<Etudiant> etudiantOpt = etudiantService.chercherParMatricule(matriculeUnique);
@@ -45,9 +40,7 @@ public class EtudiantController {
                           .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * Endpoint principal pour le Palmarès complet
-     */
+    
     @GetMapping("/{matriculeUnique}/palmares/{anneeAcademiqueId}")
     public ResponseEntity<Palmares> getPalmaresEtudiant(
             @PathVariable String matriculeUnique,
@@ -59,6 +52,5 @@ public class EtudiantController {
     }
     @GetMapping("/annees")
 public List<AnneeAcademique> getAnnees() {
-    return anneeAcademiqueRepository.findAll(); // Retourne [{id: 1, nom: "2023-2024"}, ...]
-}
+    return anneeAcademiqueRepository.findAll(); }
 }

@@ -12,5 +12,5 @@ public class AnneeAcademique {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String libelle; // Ex: "2025-2026"
+    private String libelle;
 }

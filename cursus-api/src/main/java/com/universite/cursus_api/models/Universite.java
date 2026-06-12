@@ -28,10 +28,10 @@ public class Universite {
 
     @ManyToOne
     @JoinColumn(name = "ville_id")
-    @JsonBackReference // Enfant de Ville
+    @JsonBackReference 
     private Ville ville;
 
     @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
-    @JsonManagedReference // Parent de Faculte
+    @JsonManagedReference 
     private List<Faculte> facultes;
 }

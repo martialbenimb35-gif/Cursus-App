@@ -35,19 +35,23 @@ public class EtudiantService {
         List<Resultat> resultats = etudiant.getResultats();
 
         if (resultats.isEmpty()) {
-            return Optional.of(new Palmares(etudiant, null, null, null, resultats, 0.0, "Pas de notes"));
+            return Optional.of(new Palmares(
+                etudiant, null, 
+                null, 
+                null, 
+                resultats, 
+                0.0, 
+                "Pas de notes"));
         }
 
         double totalNotesPonderees = 0.0;
         int totalCredits = 0;
-
         for (Resultat res : resultats) {
             totalNotesPonderees += res.getNote() * res.getCredit();
             totalCredits += res.getCredit();
         }
 
         double moyenne = totalNotesPonderees / totalCredits;
-
         String mention;
         if (moyenne >= 17) mention = "Excellent (Plus Grande Distinction)";
         else if (moyenne >= 15) mention = "Très Bien (Grande Distinction)";
@@ -55,6 +59,11 @@ public class EtudiantService {
         else if (moyenne >= 10) mention = "Satisfaisant (Satisfaction)";
         else mention = "Ajourné";
 
-        return Optional.of(new Palmares(etudiant, null, null, null, resultats, moyenne, mention));
+        return Optional.of(new Palmares(etudiant,
+            null, 
+            null, 
+            null, 
+            resultats, moyenne, mention
+        ));
     }
 }

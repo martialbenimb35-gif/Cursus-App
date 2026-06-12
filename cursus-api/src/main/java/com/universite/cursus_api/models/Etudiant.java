@@ -34,7 +34,6 @@ public class Etudiant {
     @Column(unique = true, nullable = false)
     private String email;
 
-    // LA MISE À JOUR EST ICI : @JsonManagedReference permet d'autoriser la sérialisation 
     // des résultats depuis l'étudiant sans causer de boucle infinie.
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

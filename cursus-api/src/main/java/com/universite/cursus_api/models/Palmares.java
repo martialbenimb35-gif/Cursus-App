@@ -11,5 +11,5 @@ public class Palmares {
     private AnneeAcademique anneeAcademique;
     private List<Resultat> detailsResultats;
     private Double moyenneGenerale;
-    private String mention; // Ex: Distinction, Grande Distinction
+    private String mention; 
 }

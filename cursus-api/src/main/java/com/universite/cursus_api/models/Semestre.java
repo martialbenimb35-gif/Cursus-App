@@ -12,5 +12,5 @@ public class Semestre {
     private Long id;
 
     @Column(nullable = false)
-    private String nom; // Ex: "Semestre 1"
+    private String nom;
 }

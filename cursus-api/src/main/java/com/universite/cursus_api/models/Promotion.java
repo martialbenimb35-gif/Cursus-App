@@ -21,6 +21,6 @@ public class Promotion {
 
     @ManyToOne
     @JoinColumn(name = "departement_id")
-    @JsonBackReference // Enfant de Departement
+    @JsonBackReference 
     private Departement departement;
 }

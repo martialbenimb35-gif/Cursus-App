@@ -25,8 +25,6 @@ public class Resultat {
     @Column(nullable = false)
     private int credit;
 
-    // MISE À JOUR ICI : @JsonBackReference empêche Spring de ré-afficher l'étudiant 
-    // à l'intérieur de chaque note, brisant ainsi la boucle infinie.
     @ManyToOne
     @JoinColumn(name = "etudiant_id", nullable = false)
     @JsonBackReference
