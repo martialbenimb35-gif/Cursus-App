@@ -15,8 +15,6 @@ function App() {
   useEffect(() => {
     const fetchAllEtudiants = async () => {
       try {
-
-        // Integration de l'API
         const response = await axios.get('http://localhost:8080/api/etudiants');
         setAllEtudiants(response.data);
       } catch (err) {
@@ -50,6 +48,7 @@ function App() {
 
     setSuggestions(filtered);
   };
+
   const handleSelectEtudiant = (etudiant) => {
     setSearchQuery(`${etudiant.prenom} ${etudiant.nom}`);
     setSuggestions([]); 
@@ -107,70 +106,91 @@ function App() {
   };
 
   const getMentionBadge = (mention) => {
-    if (!mention) return <span className="bg-slate-100 text-slate-700 border border-slate-200 px-3 py-1 rounded-full text-xs font-semibold">Sans mention</span>;
-    if (mention.includes('Excellent') || mention.includes('Grande')) return <span className="bg-indigo-50 text-indigo-700 border border-indigo-200 px-4 py-1.5 rounded-full text-xs font-bold">✨ {mention}</span>;
-    if (mention.includes('Bien') || mention.includes('Distinction')) return <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-bold">🔹 {mention}</span>;
-    return <span className="bg-sky-50 text-sky-700 border border-sky-200 px-4 py-1.5 rounded-full text-xs font-bold">👍 {mention}</span>;
+    if (!mention) return <span className="bg-slate-800 text-slate-400 border border-slate-700/50 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide">Sans mention</span>;
+    if (mention.includes('Excellent') || mention.includes('Grande') || mention.includes('Distinction')) {
+      return <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 px-5 py-2 rounded-xl text-xs font-bold tracking-wide shadow-[0_0_15px_rgba(99,102,241,0.1)]">✨ {mention}</span>;
+    }
+    return <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-5 py-2 rounded-xl text-xs font-bold tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.1)]">🔹 {mention}</span>;
   };
+
   const filteredResultats = getFilteredResultats();
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100 text-slate-800 antialiased font-sans">
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200/80 px-6 py-4 shadow-xs sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-indigo-600 text-white p-2 rounded-xl shadow-md">🎓</div>
+    <div className="min-h-screen bg-slate-950 text-slate-100 antialiased font-sans selection:bg-indigo-500 selection:text-white">
+      
+      {/* HEADER PREMIUM */}
+      <header className="bg-slate-900/60 backdrop-blur-xl border-b border-slate-800/80 px-4 sm:px-6 py-4 sticky top-0 z-50 shadow-2xl">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-5">
+          
+          {/* Logo Brand */}
+          <div className="flex items-center gap-3.5 self-start lg:self-center">
+            <div className="bg-gradient-to-tr from-indigo-600 to-violet-500 text-white p-2.5 rounded-2xl shadow-[0_4px_20px_rgba(99,102,241,0.3)] text-xl">
+              🎓
+            </div>
             <div>
-              <h1 className="text-lg font-black text-slate-900 tracking-tight">Système Cursus</h1>
-              <p className="text-[10px] text-indigo-600 font-bold tracking-wider uppercase">Parcours Universitaire</p>
+              <h1 className="text-xl font-black bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent tracking-tight">CURSUS CORE</h1>
+              <p className="text-[10px] text-indigo-400 font-extrabold tracking-widest uppercase">Palmarès & Suivi Académique</p>
             </div>
           </div>
-          <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row items-center gap-2.5 w-full lg:w-auto relative">
-            <div className="relative w-full sm:w-auto">
-              <select
-                value={selectedAnnee}
-                onChange={(e) => setSelectedAnnee(e.target.value)}
-                className="appearance-none pl-3 pr-8 py-2 rounded-xl bg-slate-100 text-xs font-bold border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white w-full transition-all cursor-pointer text-slate-700">
-                <option value="1">Année Académique 2023-2024</option>
-                <option value="2">Année Académique 2024-2025</option>
-                <option value="3">Année Académique 2025-2026</option>
-              </select>
-              <div className="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-slate-400 text-[10px]">▼</div>
+
+          {/* Formulaire & Filtres Responsives */}
+          <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row items-stretch gap-3 w-full lg:w-auto relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:flex md:items-center">
+              
+              {/* Select Année */}
+              <div className="relative">
+                <select
+                  value={selectedAnnee}
+                  onChange={(e) => setSelectedAnnee(e.target.value)}
+                  className="appearance-none w-full md:w-56 pl-4 pr-10 py-2.5 rounded-xl bg-slate-900 text-xs font-bold border border-slate-800 text-slate-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer shadow-inner"
+                >
+                  <option value="1">Année Académique 2023-2024</option>
+                  <option value="2">Année Académique 2024-2025</option>
+                  <option value="3">Année Académique 2025-2026</option>
+                </select>
+                <div className="absolute inset-y-0 right-3.5 flex items-center pointer-events-none text-slate-500 text-[9px]">▼</div>
+              </div>
+
+              {/* Select Semestre */}
+              <div className="relative">
+                <select
+                  value={selectedSemestre}
+                  onChange={(e) => setSelectedSemestre(e.target.value)}
+                  className="appearance-none w-full md:w-48 pl-4 pr-10 py-2.5 rounded-xl bg-slate-900 text-xs font-bold border border-slate-800 text-slate-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer shadow-inner"
+                >
+                  <option value="all">Tous les Semestres</option>
+                  <option value="1">Premier Semestre</option>
+                  <option value="2">Second Semestre</option>
+                </select>
+                <div className="absolute inset-y-0 right-3.5 flex items-center pointer-events-none text-slate-500 text-[9px]">▼</div>
+              </div>
             </div>
-            <div className="relative w-full sm:w-auto">
-              <select
-                value={selectedSemestre}
-                onChange={(e) => setSelectedSemestre(e.target.value)}
-                className="appearance-none pl-3 pr-8 py-2 rounded-xl bg-slate-100 text-xs font-bold border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white w-full transition-all cursor-pointer text-slate-700"
-              >
-                <option value="all">Tous les Semestres</option>
-                <option value="1">Premier Semestre</option>
-                <option value="2">Second Semestre</option>
-              </select>
-              <div className="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-slate-400 text-[10px]">▼</div>
-            </div>
-            <div className="relative w-full sm:w-48">
+
+            {/* Input Recherche de l'étudiant */}
+            <div className="relative flex-1 md:w-72">
               <input
                 type="text"
-                placeholder="Tapez le nom ou le matricule de l'etudiant"
+                placeholder="Nom ou Matricule de l'étudiant..."
                 value={searchQuery}
                 onChange={handleInputChange}
-                className="px-4 py-2 rounded-xl bg-slate-100 text-xs font-semibold border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:bg-white w-full transition-all"
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-900 text-xs font-semibold border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all shadow-inner"
                 required
               />
+              
+              {/* Menu Suggestion Flottant Dark */}
               {suggestions.length > 0 && (
-                <div className="absolute left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-48 overflow-y-auto z-50 divide-y divide-slate-100">
+                <div className="absolute left-0 right-0 mt-2 bg-slate-900/95 backdrop-blur-2xl border border-slate-800 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] max-h-60 overflow-y-auto z-50 divide-y divide-slate-800/60 custom-scrollbar">
                   {suggestions.map((etudiant) => (
                     <div
                       key={etudiant.id}
                       onClick={() => handleSelectEtudiant(etudiant)}
-                      className="px-4 py-2.5 text-xs hover:bg-indigo-50 cursor-pointer flex justify-between items-center transition-colors"
+                      className="px-4 py-3 text-xs hover:bg-slate-800/80 cursor-pointer flex justify-between items-center transition-all"
                     >
                       <div>
-                        <span className="font-bold text-slate-900">{etudiant.prenom} {etudiant.nom}</span>
-                        <span className="text-[10px] text-slate-400 font-mono block">{etudiant.matriculeUnique}</span>
+                        <span className="font-bold text-slate-200 block">{etudiant.prenom} {etudiant.nom}</span>
+                        <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">{etudiant.matriculeUnique}</span>
                       </div>
-                      <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded-sm font-mono text-slate-500">Choisir</span>
+                      <span className="text-[9px] bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2.5 py-1 rounded-lg font-bold uppercase tracking-wider">Sélectionner</span>
                     </div>
                   ))}
                 </div>
@@ -179,85 +199,113 @@ function App() {
             
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-2 rounded-xl transition-all shadow-md cursor-pointer whitespace-nowrap w-full sm:w-auto"
+              className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold px-6 py-2.5 md:py-2 rounded-xl transition-all shadow-[0_4px_15px_rgba(99,102,241,0.25)] hover:shadow-[0_4px_20px_rgba(99,102,241,0.4)] active:scale-98 cursor-pointer whitespace-nowrap text-center"
             >
-              Lancer
+              Analyser
             </button>
           </form>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-4 py-10">
+
+      {/* ZONE PRINCIPALE DE L'APPLICATION */}
+      <main className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
         
-        {error && (
-          <div className="bg-rose-50 border border-rose-100 text-rose-600 p-4 rounded-xl text-xs font-bold shadow-xs mb-6 max-w-md mx-auto">
-            ⚠️ {error}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-24 gap-3">
+            <div className="w-8 h-8 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-xs text-slate-500 font-bold tracking-wider uppercase animate-pulse">Extraction des métriques...</p>
           </div>
         )}
 
-        {!palmares && !error && (
-          <div className="text-center py-20 bg-white rounded-3xl border border-slate-200/60 p-8 max-w-md mx-auto shadow-xl">
-            <div className="w-16 h-16 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">✨</div>
-            <h3 className="text-sm font-black text-slate-900 tracking-tight">Recherche Instantanée active</h3>
-            <p className="text-slate-500 text-xs mt-2 leading-relaxed">
-              Commencez simplement à saisir le nom de votre étudiant, la liste s'adaptera automatiquement à chaque lettre tapée.
+        {error && !loading && (
+          <div className="bg-rose-500/10 border border-rose-500/20 text-rose-400 p-4 rounded-2xl text-xs font-semibold shadow-2xl mb-8 max-w-md mx-auto flex items-center gap-3">
+            <span className="text-base">⚠️</span> {error}
+          </div>
+        )}
+
+        {!palmares && !error && !loading && (
+          <div className="text-center py-16 sm:py-24 bg-slate-900/40 rounded-3xl border border-slate-900 p-6 sm:p-10 max-w-md mx-auto shadow-2xl relative overflow-hidden group">
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-all duration-700"></div>
+            <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-5 shadow-inner">⚡</div>
+            <h3 className="text-base font-bold text-slate-200 tracking-tight">Indexation Active & Prête</h3>
+            <p className="text-slate-500 text-xs mt-2.5 leading-relaxed max-w-xs mx-auto">
+              Saisissez le nom complet ou le matricule unique d'un étudiant pour générer instantanément son dashboard de performances académiques.
             </p>
           </div>
         )}
 
-        {palmares && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-slate-200/60 p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-2 h-full bg-indigo-600"></div>
-              <div>
+        {palmares && !loading && (
+          <div className="space-y-6 animate-fadeIn">
+            
+            {/* CARTE ID ÉTUDIANT (PANEL SUPERIEUR) */}
+            <div className="bg-slate-950 rounded-3xl border border-slate-800/80 p-5 sm:p-7 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
+              <div className="absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b from-indigo-500 to-violet-500"></div>
+              
+              <div className="space-y-3.5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-md">
-                    Promotion active : {getDynamicPromotion()}
+                  <span className="text-[9px] font-black uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-lg">
+                    {getDynamicPromotion()}
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-amber-700 bg-amber-50 border border-amber-100 px-2.5 py-0.5 rounded-md">
-                    Période : {getAnneeLabel()}
+                  <span className="text-[9px] font-black uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-lg">
+                    Session : {getAnneeLabel()}
                   </span>
                 </div>
-                <h2 className="text-2xl font-black text-slate-900 mt-3 tracking-tight">
-                  {palmares.etudiant?.prenom} {palmares.etudiant?.nom}
-                </h2>
-                <p className="text-xs text-slate-500 mt-1">📧 {palmares.etudiant?.email}</p>
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                    {palmares.etudiant?.prenom} {palmares.etudiant?.nom}
+                  </h2>
+                  <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-1.5">
+                    <span className="text-slate-600">✉</span> {palmares.etudiant?.email}
+                  </p>
+                </div>
               </div>
-              <div className="bg-slate-50 border border-slate-200/60 rounded-2xl px-4 py-2.5 font-mono text-xs w-full md:w-auto text-center md:text-left">
-                <span className="text-slate-400 block text-[9px] font-bold uppercase tracking-wider font-sans mb-0.5">Matricule</span>
-                <span className="font-bold text-slate-800">{palmares.etudiant?.matriculeUnique}</span>
+
+              {/* Badge Matricule Block */}
+              <div className="bg-slate-900/90 border border-slate-800 rounded-2xl px-5 py-3 font-mono text-center md:text-left w-full md:w-auto shadow-inner">
+                <span className="text-slate-500 block text-[9px] font-bold uppercase tracking-widest font-sans mb-1">Matricule d'Identification</span>
+                <span className="font-bold text-sm bg-gradient-to-r from-slate-200 to-white bg-clip-text text-transparent">{palmares.etudiant?.matriculeUnique}</span>
               </div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-200/60 shadow-xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                <h4 className="font-black text-slate-800 text-xs uppercase tracking-wider">Unités d'Enseignements</h4>
-                <span className="text-[10px] text-slate-400 font-bold">{filteredResultats.length} matière(s)</span>
+            {/* TABLEAU DES NOTES (RESPONSIVE CARD) */}
+            <div className="bg-slate-900/40 rounded-3xl border border-slate-800/80 shadow-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-800/60 bg-slate-900/60 flex justify-between items-center">
+                <h4 className="font-bold text-slate-400 text-xs uppercase tracking-wider">Unités d'Enseignements validées</h4>
+                <span className="text-[10px] bg-slate-800 text-slate-400 border border-slate-700/60 px-2.5 py-0.5 rounded-full font-bold">{filteredResultats.length} matière(s)</span>
               </div>
+
+              {/* Conteneur pour défilement tactile sur Mobile */}
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+                <table className="w-full text-left border-collapse min-w-[600px]">
                   <thead>
-                    <tr className="bg-slate-50/70 text-slate-400 font-bold text-[10px] uppercase border-b border-slate-200/60 tracking-wider">
-                      <th className="px-6 py-3.5">Intitulé de la Matière</th>
-                      <th className="px-6 py-3.5">Promotion</th>
-                      <th className="px-6 py-3.5 text-center">Semestre</th>
-                      <th className="px-6 py-3.5 text-center">Volume Crédits</th>
-                      <th className="px-6 py-3.5 text-right pr-8">Note d'Évaluation</th>
+                    <tr className="bg-slate-900/20 text-slate-500 font-bold text-[10px] uppercase border-b border-slate-800 tracking-wider">
+                      <th className="px-6 py-4">Intitulé de la Matière</th>
+                      <th className="px-6 py-4 text-center">Semestre</th>
+                      <th className="px-6 py-4 text-center">Volume Crédits</th>
+                      <th className="px-6 py-4 text-right pr-8">Note d'Évaluation</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 text-xs font-semibold text-slate-700">
+                  <tbody className="divide-y divide-slate-800/50 text-xs font-semibold text-slate-300">
                     {filteredResultats.length > 0 ? (
                       filteredResultats.map((res) => (
-                        <tr key={res.id} className="hover:bg-indigo-50/20 transition-all">
-                          <td className="px-6 py-4 font-bold text-slate-900">{res.matiere}</td>
-                          <td className="px-6 py-4 text-slate-500 text-[11px]">{res.promotion?.nom || 'N/A'}</td>
+                        <tr key={res.id} className="hover:bg-slate-900/50 transition-colors group">
+                          <td className="px-6 py-4 font-bold text-slate-200 group-hover:text-white transition-colors">
+                            {res.matiere}
+                          </td>
                           <td className="px-6 py-4 text-center">
-                            <span className="bg-slate-100 text-slate-600 border border-slate-200/60 px-2 py-0.5 rounded-md font-bold text-[10px]">
+                            <span className="bg-slate-900 text-slate-400 border border-slate-800 px-2.5 py-1 rounded-lg font-bold text-[10px]">
                               {res.semestre?.nom || `Semestre ${res.semestre?.id}`}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-center font-mono font-bold text-slate-400">{res.credit} Crs</td>
+                          <td className="px-6 py-4 text-center font-mono font-bold text-slate-500">
+                            {res.credit} <span className="text-[9px] text-slate-600 font-sans">Crs</span>
+                          </td>
                           <td className="px-6 py-4 text-right pr-8 font-mono">
-                            <span className={`inline-block font-bold text-sm px-2.5 py-0.5 rounded-lg ${res.note >= 10 ? 'text-emerald-700 bg-emerald-50' : 'text-rose-700 bg-rose-50'}`}>
+                            <span className={`inline-block font-extrabold text-xs px-3 py-1 rounded-xl shadow-inner ${
+                              res.note >= 10 
+                                ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20' 
+                                : 'text-rose-400 bg-rose-500/10 border border-rose-500/20'
+                            }`}>
                               {res.note ? res.note.toFixed(1) : '0.0'}
                             </span>
                           </td>
@@ -265,8 +313,8 @@ function App() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="5" className="px-6 py-10 text-center text-slate-400 font-medium italic">
-                          Aucune note disponible pour cette période ou ce semestre.
+                        <td colSpan="4" className="px-6 py-12 text-center text-slate-600 font-medium italic">
+                          Aucune donnée d'évaluation répertoriée pour ce filtre.
                         </td>
                       </tr>
                     )}
@@ -275,22 +323,30 @@ function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-xl">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Performances Annuelles</span>
+            {/* METRICS DU RELEVÉ DE NOTES */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              {/* Carte Moyenne */}
+              <div className="bg-gradient-to-br from-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-600/5 rounded-full blur-2xl group-hover:bg-indigo-600/10 transition-all"></div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Moyenne Générale Pondérée</span>
                 <div className="flex items-baseline gap-1 mt-4">
-                  <span className="text-4xl font-black text-slate-900 font-mono tracking-tight">
+                  <span className="text-4xl font-black bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent font-mono tracking-tight">
                     {palmares.moyenneGenerale ? palmares.moyenneGenerale.toFixed(2) : '0.00'}
                   </span>
-                  <span className="text-slate-400 text-xs font-bold">/ 20.00</span>
+                  <span className="text-slate-600 text-xs font-bold font-mono">/ 20.00</span>
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-xl">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Décision du Jury</span>
+
+              {/* Carte Mention */}
+              <div className="bg-gradient-to-br from-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-600/5 rounded-full blur-2xl group-hover:bg-emerald-600/10 transition-all"></div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Statut & Décision du Jury</span>
                 <div className="mt-4 flex items-center">
                   {getMentionBadge(palmares.mention)}
                 </div>
               </div>
+
             </div>
           </div>
         )}
