@@ -124,11 +124,11 @@ function App() {
           
           {/* Logo Brand */}
           <div className="flex items-center gap-3.5 self-start lg:self-center">
-            <div className="bg-gradient-to-tr from-indigo-600 to-violet-500 text-white p-2.5 rounded-2xl shadow-[0_4px_20px_rgba(99,102,241,0.3)] text-xl">
+            <div className=" from-indigo-600 to-violet-500 text-white p-2.5 rounded-2xl shadow-[0_4px_20px_rgba(99,102,241,0.3)] text-xl">
               🎓
             </div>
             <div>
-              <h1 className="text-xl font-black bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent tracking-tight">CURSUS CORE</h1>
+              <h1 className="text-xl font-black from-white via-slate-200 to-slate-400 bg-clip-text text-transparent tracking-tight">CURSUS CORE</h1>
               <p className="text-[10px] text-indigo-400 font-extrabold tracking-widest uppercase">Palmarès & Suivi Académique</p>
             </div>
           </div>
@@ -199,7 +199,7 @@ function App() {
             
             <button
               type="submit"
-              className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold px-6 py-2.5 md:py-2 rounded-xl transition-all shadow-[0_4px_15px_rgba(99,102,241,0.25)] hover:shadow-[0_4px_20px_rgba(99,102,241,0.4)] active:scale-98 cursor-pointer whitespace-nowrap text-center"
+              className=" from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold px-6 py-2.5 md:py-2 rounded-xl transition-all shadow-[0_4px_15px_rgba(99,102,241,0.25)] hover:shadow-[0_4px_20px_rgba(99,102,241,0.4)] active:scale-98 cursor-pointer whitespace-nowrap text-center"
             >
               Analyser
             </button>
@@ -239,7 +239,7 @@ function App() {
             
             {/* CARTE ID ÉTUDIANT (PANEL SUPERIEUR) */}
             <div className="bg-slate-950 rounded-3xl border border-slate-800/80 p-5 sm:p-7 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-              <div className="absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b from-indigo-500 to-violet-500"></div>
+              <div className="absolute top-0 bottom-0 left-0 w-1.5  from-indigo-500 to-violet-500"></div>
               
               <div className="space-y-3.5">
                 <div className="flex flex-wrap items-center gap-2">
@@ -263,7 +263,7 @@ function App() {
               {/* Badge Matricule Block */}
               <div className="bg-slate-900/90 border border-slate-800 rounded-2xl px-5 py-3 font-mono text-center md:text-left w-full md:w-auto shadow-inner">
                 <span className="text-slate-500 block text-[9px] font-bold uppercase tracking-widest font-sans mb-1">Matricule d'Identification</span>
-                <span className="font-bold text-sm bg-gradient-to-r from-slate-200 to-white bg-clip-text text-transparent">{palmares.etudiant?.matriculeUnique}</span>
+                <span className="font-bold text-sm from-slate-200 to-white bg-clip-text text-transparent">{palmares.etudiant?.matriculeUnique}</span>
               </div>
             </div>
 
@@ -276,7 +276,7 @@ function App() {
 
               {/* Conteneur pour défilement tactile sur Mobile */}
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+                <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-slate-900/20 text-slate-500 font-bold text-[10px] uppercase border-b border-slate-800 tracking-wider">
                       <th className="px-6 py-4">Intitulé de la Matière</th>
@@ -327,11 +327,11 @@ function App() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               
               {/* Carte Moyenne */}
-              <div className="bg-gradient-to-br from-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden group">
+              <div className="from-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-600/5 rounded-full blur-2xl group-hover:bg-indigo-600/10 transition-all"></div>
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Moyenne Générale Pondérée</span>
                 <div className="flex items-baseline gap-1 mt-4">
-                  <span className="text-4xl font-black bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent font-mono tracking-tight">
+                  <span className="text-4xl font-black  from-white to-slate-300 bg-clip-text text-transparent font-mono tracking-tight">
                     {palmares.moyenneGenerale ? palmares.moyenneGenerale.toFixed(2) : '0.00'}
                   </span>
                   <span className="text-slate-600 text-xs font-bold font-mono">/ 20.00</span>
@@ -339,7 +339,7 @@ function App() {
               </div>
 
               {/* Carte Mention */}
-              <div className="bg-gradient-to-br from-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden group">
+              <div className="from-slate-900 to-slate-950 p-6 rounded-3xl border border-slate-800/80 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-600/5 rounded-full blur-2xl group-hover:bg-emerald-600/10 transition-all"></div>
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Statut & Décision du Jury</span>
                 <div className="mt-4 flex items-center">
