@@ -1,13 +1,10 @@
-# Étape 1 : Build de l'application avec Maven
-FROM maven:3.8.4-openjdk-17 AS build
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+# Étape 1 : Build de l'application avec Maven et Java 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Étape 2 : Lancement de l'application avec Java
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+# Étape 2 : Exécution de l'application avec Java 21
+FROM eclipse-temurin:21-jdk-jammy
+COPY --from=build /target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
